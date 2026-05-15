@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Book extends Model
 {
-     protected $fillable = [
+    protected $fillable = [
         'title',
         'author',
         'year',
@@ -16,13 +17,13 @@ class Book extends Model
         'bookshelf_id',
     ];
 
-    public function bookshelf()
+    public function bookshelf(): BelongsTo
     {
-        return $this->belongsTo(Bookshelf::class, 'bookshelf_id');
+        return $this->belongsTo(Bookshelf::class);
     }
 
     public function loanDetails()
     {
-        return $this->hasMany(LoanDetail::class, 'book_id');
+        return $this->hasMany(LoanDetail::class);
     }
 }

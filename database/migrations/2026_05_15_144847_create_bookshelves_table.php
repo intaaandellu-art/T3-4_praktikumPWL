@@ -6,24 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('bookshelf', function (Blueprint $table) {
+        Schema::create('bookshelves', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 255);
-            $table->string('name', 255);
-            
+            $table->string('code', 10)->unique();
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('bookshelf');
+        Schema::dropIfExists('bookshelfs');
     }
 };

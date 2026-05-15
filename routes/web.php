@@ -1,33 +1,21 @@
 <?php
 
-// use Illuminate\Support\Facades\Route;
-use App\Models\Book;
-use App\Models\Loan;
-use App\Models\User;
+use App\Http\Controllers\BookController;
+use Illuminate\Support\Facades\Route;
 
-// tampil semua buku + relasi rak
-Route::get('/books', function () {
-    $books = Book::with('bookshelf')->get();
-    return view('books.index', compact('books'));
+Route::get('/', function () {
+    return view('welcome');
 });
 
-// tampil user + pinjaman
-Route::get('/users', function () {
-    $users = User::with('loans')->get();
-    return view('users.index', compact('users'));
-});
+// Resource route untuk books (index, create, store, show, edit, update, destroy)
+Route::resource('books', BookController::class);
 
-// tampil loan + detail + buku
-Route::get('/loans', function () {
-    $loans = Loan::with('loanDetails.book')->get();
-    return view('loans.index', compact('loans'));
-});
-
-// Route::get('/dashboard', function () {
-//     $user = User::first();
-//     return view('dashboard', compact('user'));
-// });
-
-// Route::get('/beranda', function () {
-//     return view('page beranda');
-// });
+// Atau jika ingin manual:
+// Route::get('/books', [BookController::class, 'index'])->name('books.index');
+// Route::get('/books/create', [BookController::class, 'create'])->name('books.create');
+// Route::post('/books', [BookController::class, 'store'])->name('books.store');
+// Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
+// Route::get('/books/{book}/edit', [BookController::class, 'edit'])->name('books.edit');
+// Route::put('/books/{book}', [BookController::class, 'update'])->name('books.update');
+// Route::patch('/books/{book}', [BookController::class, 'update'])->name('books.update');
+// Route::delete('/books/{book}', [BookController::class, 'destroy'])->name('books.destroy');

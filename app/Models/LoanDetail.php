@@ -3,26 +3,38 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class LoanDetail extends Model
 {
-    protected $table = 'loan_detail';
-
     protected $fillable = [
         'loan_id',
         'book_id',
         'is_return',
     ];
 
-    public function loan(){
-        return $this->belongsTo(Loan::class, 'loan_id');
+    /**
+     * Relasi ke Loan (banyak detail milik satu pinjaman)
+     */
+    public function loan(): BelongsTo
+    {
+        return $this->belongsTo(Loan::class);
     }
 
-    public function book(){
-        return $this->belongsTo(Book::class, 'book_id');
+    /**
+     * Relasi ke Book (detail meminjam satu buku)
+     */
+    public function book(): BelongsTo
+    {
+        return $this->belongsTo(Book::class);
     }
 
-    public function returns(){
-        return $this->hasOne(Returns::class, 'loan_detail_id');
+    /**
+     * Relasi ke Return (satu detail bisa punya pengembalian)
+     */
+    public function returnRecord(): HasOne
+    {
+        return $this->hasOne(ReturnRecord::class, 'loan_detail_id');
     }
 }
